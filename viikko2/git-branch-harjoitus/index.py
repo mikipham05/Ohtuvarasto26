@@ -1,4 +1,5 @@
 # Muutos alkuperäisessä kloonissa
+# Muutos toisessa kloonissa
 from logger import logger
 from summa import summa
 from erotus import erotus
