@@ -1,8 +1,10 @@
+
 """Varastossovelluksen käynnistys."""
 from varasto import Varasto
 
 
 def main():
+    # Konfliktiharjoituksen ensimmäinen muutos.
     """Käynnistää varastosovelluksen."""
     mehua = Varasto(100.0)
     olutta = Varasto(100.0, 20.2)
