@@ -1,9 +1,10 @@
+
 """Varastossovelluksen käynnistys."""
 from varasto import Varasto
 
 
 def main():
-    # Tämä on main-haaran toinen muutos.
+    # Konflikti ratkaistu yhdistämällä molempien haarojen muutokset.
     """Käynnistää varastosovelluksen."""
     mehua = Varasto(100.0)
     olutta = Varasto(100.0, 20.2)
