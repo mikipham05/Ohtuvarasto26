@@ -1,7 +1,9 @@
 from varasto import Varasto
 
+"""Varastosovelluksen käynnistys"""
 
 def main():
+    """Käynnistää varastosovelluksen."""
     mehua = Varasto(100.0)
     olutta = Varasto(100.0, 20.2)
 
