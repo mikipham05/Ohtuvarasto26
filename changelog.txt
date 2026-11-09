@@ -1,0 +1,3 @@
+Muutoksia ohjelmaan:
+- Lisätty bugikorjaus-haara.
+- Harjoiteltu etähaarojen käyttöä.
