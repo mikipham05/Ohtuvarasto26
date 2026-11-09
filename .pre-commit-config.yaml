@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pylint
+        name: Pylint
+        entry: uv run pylint src
+        language: system
+        pass_filenames: false
+        always_run: true
