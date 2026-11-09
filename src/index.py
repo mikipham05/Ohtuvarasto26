@@ -1,6 +1,6 @@
+"""Varastossovelluksen käynnistys."""
 from varasto import Varasto
 
-"""Varastosovelluksen käynnistys"""
 
 def main():
     """Käynnistää varastosovelluksen."""
