@@ -3,6 +3,7 @@ from varasto import Varasto
 
 
 def main():
+    # Tämä on main-haaran toinen muutos.
     """Käynnistää varastosovelluksen."""
     mehua = Varasto(100.0)
     olutta = Varasto(100.0, 20.2)
