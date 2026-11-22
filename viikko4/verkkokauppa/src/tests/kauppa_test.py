@@ -120,3 +120,62 @@ class TestKauppa(unittest.TestCase):
         pankki_mock.tilisiirto.assert_called_with(
             "pekka", 42, "12345", "33333-44455", 3
         )
+
+    def test_uusi_asiointi_tyhjentaa_edellisen_ostokorin(self):
+        pankki_mock = Mock()
+        viitegeneraattori_mock = Mock()
+        viitegeneraattori_mock.uusi.return_value = 42
+
+        varasto_mock = Mock()
+        varasto_mock.saldo.return_value = 10
+        varasto_mock.hae_tuote.return_value = Tuote(1, "maito", 5)
+
+        kauppa = Kauppa(varasto_mock, pankki_mock, viitegeneraattori_mock)
+
+        kauppa.aloita_asiointi()
+        kauppa.lisaa_koriin(1)
+
+        # Aloitetaan uusi asiointi
+        kauppa.aloita_asiointi()
+        kauppa.tilimaksu("pekka", "12345")
+
+        pankki_mock.tilisiirto.assert_called_with(
+            "pekka", 42, "12345", "33333-44455", 0
+        )
+
+    def test_jokainen_maksutapahtuma_pyytaa_uuden_viitenumeron(self):
+        pankki_mock = Mock()
+        viitegeneraattori_mock = Mock()
+        viitegeneraattori_mock.uusi.side_effect = [42, 43]
+
+        varasto_mock = Mock()
+        varasto_mock.saldo.return_value = 10
+        varasto_mock.hae_tuote.return_value = Tuote(1, "maito", 5)
+
+        kauppa = Kauppa(varasto_mock, pankki_mock, viitegeneraattori_mock)
+
+        kauppa.aloita_asiointi()
+        kauppa.lisaa_koriin(1)
+        kauppa.tilimaksu("pekka", "12345")
+
+        kauppa.aloita_asiointi()
+        kauppa.lisaa_koriin(1)
+        kauppa.tilimaksu("pekka", "12345")
+
+        self.assertEqual(viitegeneraattori_mock.uusi.call_count, 2)
+
+    def test_poistettaessa_tuote_korista_se_palautetaan_varastoon(self):
+        pankki_mock = Mock()
+        viitegeneraattori_mock = Mock()
+        varasto_mock = Mock()
+        varasto_mock.saldo.return_value = 10
+        tuote = Tuote(1, "maito", 5)
+        varasto_mock.hae_tuote.return_value = tuote
+
+        kauppa = Kauppa(varasto_mock, pankki_mock, viitegeneraattori_mock)
+
+        kauppa.aloita_asiointi()
+        kauppa.lisaa_koriin(1)
+        kauppa.poista_korista(1)
+
+        varasto_mock.palauta_varastoon.assert_called_once_with(tuote)
