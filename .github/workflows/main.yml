@@ -22,9 +22,17 @@ jobs:
       - name: Run Pylint
         run: uv run pylint src
 
-      - name: Run tests
-        run: uv run coverage run --branch -m pytest
-        
+      - name: Run main tests
+        run: uv run coverage run --branch -m pytest src/tests
+
+      - name: Run maksukortti tests
+        working-directory: viikko4/maksukortti-mock
+        run: uv run --project ../.. pytest
+
+      - name: Run verkkokauppa tests
+        working-directory: viikko4/verkkokauppa
+        run: uv run --project ../.. pytest
+
       - name: Coverage report
         run: uv run coverage xml
       - name: Coverage report to Codecov
